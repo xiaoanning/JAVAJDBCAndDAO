@@ -1,0 +1,45 @@
+package dao;
+
+import java.util.List;
+
+import entity.Account;
+
+public class AccountDAOImplement implements AccountDAO
+{
+
+	@Override
+	public void insert(Account a) 
+	{
+
+		
+	}
+
+	@Override
+	public void delete(Integer card_id) 
+	{
+
+		
+	}
+
+	@Override
+	public void update(Account a) 
+	{
+
+		
+	}
+
+	@Override
+	public List<Account> selectAll() 
+	{
+
+		return null;
+	}
+
+	@Override
+	public Account selectByCardId(Integer card_id)
+	{
+
+		return null;
+	}
+
+}

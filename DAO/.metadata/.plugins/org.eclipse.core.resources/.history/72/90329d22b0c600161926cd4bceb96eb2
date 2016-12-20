@@ -1,0 +1,166 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import entity.Account;
+
+public class AccountDAOImplement implements AccountDAO
+{
+	private Connection con = null ;
+	private PreparedStatement ps = null ;
+	private ResultSet rs = null ;
+
+	@Override
+	public void insert(Account a) 
+	{
+		
+		try
+		{
+			con = JDBCUtil.getConnection();
+			
+			String sql = "insert into account values(account_seq.nextval,?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, a.getUsername());
+			ps.setString(2, a.getPassword());
+			ps.setDouble(3, a.getBalance());
+			ps.setString(4, a.getMobile());
+			
+			ps.executeUpdate();
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			try 
+			{
+				JDBCUtil.close(rs, ps, con);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	@Override
+	public void delete(Integer card_id) 
+	{
+		try 
+		{
+			con = JDBCUtil.getConnection();
+			
+			String sql = "delete account where card_id = ?";
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, card_id);
+			ps.executeUpdate();
+			
+			
+			
+		} catch (Exception e) 
+		{
+			e.printStackTrace();
+		}finally
+		{
+			try 
+			{
+				JDBCUtil.close(rs, ps, con);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+
+	@Override
+	public void update(Account a) 
+	{
+		try 
+		{
+			con = JDBCUtil.getConnection();
+			
+			String sql = "update account set username = ? , password = ? , balance = ? , mobile = ? where card_id = ?";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, a.getUsername());
+			ps.setString(2, a.getPassword());
+			ps.setDouble(3, a.getBalance());
+			ps.setString(4, a.getMobile());
+			ps.setInt(5, a.getChar_id());
+			ps.executeUpdate();
+			
+		} catch (Exception e) 
+		{
+			e.printStackTrace();
+		}finally
+		{
+			try {
+				JDBCUtil.close(rs, ps, con);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+
+	@Override
+	public List<Account> selectAll() 
+	{
+		List<Account> list = new ArrayList<Account>();
+		
+		try
+		{
+			con = JDBCUtil.getConnection() ;
+			
+			String sql = "select * from account";
+			ps = con.prepareStatement(sql);
+			
+			rs = ps.executeQuery();
+			
+			while(rs.next())
+			{
+				Account a = new Account();
+				
+				a.setChar_id(rs.getInt(1)) ;
+				a.setUsername(rs.getString(2));
+				a.setPassword(rs.getString(3));
+				a.setBalance(rs.getDouble(4));
+				a.setMobile(rs.getString(5));
+				
+				list.add(a);
+			}
+			
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			try 
+			{
+				JDBCUtil.close(rs, ps, con);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+		return list ;
+		
+}
+
+	@Override
+	public Account selectByCardId(Integer card_id)
+	{
+
+		return null;
+	}
+
+}

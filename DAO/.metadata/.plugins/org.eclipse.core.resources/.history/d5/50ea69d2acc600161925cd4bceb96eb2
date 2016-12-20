@@ -1,0 +1,78 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.List;
+
+import entity.Account;
+
+public class AccountDAOImplement implements AccountDAO
+{
+	private Connection con = null ;
+	private PreparedStatement ps = null ;
+	private ResultSet rs = null ;
+
+	@Override
+	public void insert(Account a) 
+	{
+		
+		try
+		{
+			con = JDBCUtil.getConnection();
+			
+			String sql = "insert into account values(account_seq.nextval,?,?,?,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, a.getUsername());
+			ps.setString(2, a.getPassword());
+			ps.setDouble(3, a.getBalance());
+			ps.setString(4, a.getMobile());
+			
+			ps.executeUpdate();
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}finally
+		{
+			try 
+			{
+				JDBCUtil.close(rs, ps, con);
+			} catch (Exception e) 
+			{
+				e.printStackTrace();
+			}
+		}
+		
+	}
+
+	@Override
+	public void delete(Integer card_id) 
+	{
+
+		
+	}
+
+	@Override
+	public void update(Account a) 
+	{
+
+		
+	}
+
+	@Override
+	public List<Account> selectAll() 
+	{
+
+		return null;
+	}
+
+	@Override
+	public Account selectByCardId(Integer card_id)
+	{
+
+		return null;
+	}
+
+}

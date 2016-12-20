@@ -1,0 +1,36 @@
+package dao;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Properties;
+
+/***
+ * 
+ * 1 从配置文件中获取信息
+ * 
+ * 2 封装获取连接的方法
+ * 3 封装关闭资源的方法
+ * 
+ * 
+ *
+ */
+public class JDBCUtil
+{
+	private static Properties p = new Properties();
+	
+	static
+	{
+		InputStream is = JDBCUtil.class.getResourceAsStream("/JDBC.properties");
+		
+		try
+		{
+			p.load(is);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	
+	
+}
